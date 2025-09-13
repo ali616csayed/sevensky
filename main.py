@@ -1,6 +1,9 @@
 import os
 
 from atproto import Client, IdResolver, models
+from dotenv import load_dotenv
+
+load_dotenv()
 
 USERNAME = os.getenv("ATPROTO_USERNAME")
 PASSWORD = os.getenv("ATPROTO_PASSWORD")
