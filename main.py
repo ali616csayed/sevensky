@@ -45,7 +45,7 @@ async def get_client():
     return client, dm
 
 
-def upload_image(client, image_data: bytes):
+def upload_image(client: Client, image_data: bytes):
     """Upload an image file and return the blob reference"""
     blob_response = client.com.atproto.repo.upload_blob(image_data)
     return blob_response.blob
@@ -83,7 +83,8 @@ async def get_conversations():
                         "createdAt": msg.sent_at,
                         "embed": getattr(msg, "embed", None),
                     }
-            except:
+            except Exception as e:
+                print(f"Error getting last message for convo {convo.id}: {e}")
                 pass
 
             conversations.append(
