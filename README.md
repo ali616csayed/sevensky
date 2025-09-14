@@ -85,6 +85,8 @@ This will start:
 - Backend API on http://localhost:8000
 - Frontend on http://localhost:5173
 
+The script automatically handles both servers and will stop both when you press Ctrl+C.
+
 ## API Endpoints
 
 - `GET /` - Health check

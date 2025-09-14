@@ -1,8 +1,11 @@
 #!/bin/bash
 
+# Get the script directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Start the FastAPI backend
 echo "Starting FastAPI backend..."
-cd /Users/zackkhan/Projects/chat/sevensky
+cd "$SCRIPT_DIR"
 uv run uvicorn main:app --reload --host 0.0.0.0 --port 8000 &
 BACKEND_PID=$!
 
@@ -11,7 +14,7 @@ sleep 3
 
 # Start the React frontend
 echo "Starting React frontend..."
-cd /Users/zackkhan/Projects/chat/sevensky/frontend
+cd "$SCRIPT_DIR/frontend"
 npm run dev &
 FRONTEND_PID=$!
 
