@@ -11,7 +11,7 @@ sleep 3
 
 # Start the React frontend
 echo "Starting React frontend..."
-cd /Users/zackkhan/Projects/chat/frontend
+cd /Users/zackkhan/Projects/chat/sevensky/frontend
 npm run dev &
 FRONTEND_PID=$!
 
