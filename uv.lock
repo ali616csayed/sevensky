@@ -345,8 +345,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "python-multipart"
 version = "0.0.20"
 source = { registry = "https://pypi.org/simple" }
@@ -356,7 +354,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> db037b4 (set up fast api and react frontend)
 name = "sevensky"
 version = "0.1.0"
 source = { virtual = "." }
