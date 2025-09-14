@@ -13,23 +13,46 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUserDid }) =
   };
 
   const renderImageEmbed = (embed: Message['embed']) => {
-    if (!embed?.images || embed.images.length === 0) return null;
+    console.log('=== RENDER IMAGE EMBED ===');
+    console.log('embed:', embed);
+    console.log('embed?.images:', embed?.images);
+    console.log('embed.images length:', embed?.images?.length);
+
+    if (!embed?.images || embed.images.length === 0) {
+      console.log('❌ No images found or empty array');
+      return null;
+    }
+
+    console.log('✅ Found images, rendering...');
 
     return (
       <div className="mt-2 space-y-2">
-        {embed.images.map((img, index) => (
-          <div key={index} className="relative">
-            <img
-              src={`https://bsky.social/xrpc/com.atproto.sync.getBlob?did=${img.image.ref.$link.split('/')[2]}&cid=${img.image.ref.$link.split('/')[3]}`}
-              alt={img.alt}
-              className="max-w-xs rounded-lg shadow-sm"
-              onError={(e) => {
-                // Fallback for image loading
-                (e.target as HTMLImageElement).style.display = 'none';
-              }}
-            />
-          </div>
-        ))}
+        {embed.images.map((img, index) => {
+          console.log(`=== IMAGE ${index + 1} ===`);
+          console.log('img:', img);
+          console.log('img.blob_url:', img.blob_url);
+          console.log('img.image:', img.image);
+          console.log('img.image.ref:', img.image?.ref);
+          console.log('img.image.ref.$link:', img.image?.ref?.$link);
+
+          const imageUrl = img.blob_url || `https://bsky.social/xrpc/com.atproto.sync.getBlob?did=${img.image.ref.$link.split('/')[2]}&cid=${img.image.ref.$link.split('/')[3]}`;
+          console.log('Final image URL:', imageUrl);
+
+          return (
+            <div key={index} className="relative">
+              <img
+                src={imageUrl}
+                alt={img.alt}
+                className="max-w-xs rounded-lg shadow-sm"
+                onLoad={() => console.log(`✅ Image ${index + 1} loaded successfully`)}
+                onError={(e) => {
+                  console.error(`❌ Image ${index + 1} failed to load:`, imageUrl);
+                  (e.target as HTMLImageElement).style.display = 'none';
+                }}
+              />
+            </div>
+          );
+        })}
       </div>
     );
   };
@@ -43,7 +66,16 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUserDid }) =
       ) : (
         messages.map((message) => {
           const isCurrentUser = message.author.did === currentUserDid;
-          
+
+          // Debug logging for messages with embeds
+          if (message.embed) {
+            console.log('=== MESSAGE WITH EMBED ===');
+            console.log('Message ID:', message.id);
+            console.log('Message text:', message.text);
+            console.log('Message embed:', message.embed);
+            console.log('=== END MESSAGE DEBUG ===');
+          }
+
           return (
             <div
               key={message.id}
